@@ -9,8 +9,8 @@ buildscript {
             name = "AEVI-UK"
             url = uri("https://maven.pkg.github.com/aevi-uk/*")
             credentials {
-                username = "moseskaranja830@gmail.com"
-                password = "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"
+                username = "Please Write your github email here - Can't give you mine because of security"
+                password = "Please Write your github password i.e. the access token here"
             }
         }
     }
