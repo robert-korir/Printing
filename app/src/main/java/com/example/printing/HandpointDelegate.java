@@ -1,11 +1,6 @@
 package com.example.printing;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.handpoint.api.HandpointCredentials;
 import com.handpoint.api.Hapi;
@@ -25,35 +20,16 @@ import com.handpoint.api.shared.agreements.MerchantAuth;
 import com.handpoint.api.shared.options.SaleOptions;
 
 import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.X509TrustManager;
-
-public class MainActivity extends AppCompatActivity implements Events.Required, Events.ConnectionStatusChanged, Events.CurrentTransactionStatus {
-
-    Button mainButton;
-
-    
-
+public class HandpointDelegate implements Events.Required, Events.ConnectionStatusChanged, Events.CurrentTransactionStatus  {
 
     private Hapi api;
 
-//    public MainActivity(){
-//
-//    }
-//
-//    public MainActivity(Context context) {
-//        initApi(context);
-//
-//    }
+    public HandpointDelegate(Context context) {
+        initApi(context);
+    }
 
     public void initApi(Context context){
         String sharedSecret = "0102030405060708091011121314151617181920212223242526272829303132";
@@ -67,27 +43,6 @@ public class MainActivity extends AppCompatActivity implements Events.Required, 
         Device device = new Device("some name", "address", "", ConnectionMethod.ANDROID_PAYMENT);
 
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        trustEveryone();
-        HttpsTrustManager.allowAllSSL();
-        initApi(this);
-
-        mainButton = findViewById(R.id.mainButton);
-
-        mainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                payWithOptions();
-
-            }
-        });
-    }
-
 
     @Override
     public void connectionStatusChanged(ConnectionStatus connectionStatus, Device device) {
@@ -161,9 +116,6 @@ public class MainActivity extends AppCompatActivity implements Events.Required, 
         //Define a budget number
         options.setBudgetNumber("YOUR_BUDGET_NUMBER");
 
-        //this.api.sale(new BigInteger("1000"),Currency.GBP, options))
-        //trustEveryone();
-
         return this.api.sale(new BigInteger("1000"),Currency.GBP, options);
     }
 
@@ -207,28 +159,6 @@ public class MainActivity extends AppCompatActivity implements Events.Required, 
     public void disconnect(){
         this.api.disconnect();
         //THis disconnects the connection
-    }
-
-    private void trustEveryone() {
-        try {
-            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier(){
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }});
-            SSLContext context = SSLContext.getInstance("TLS");
-            context.init(null, new X509TrustManager[]{new X509TrustManager(){
-                public void checkClientTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {}
-                public void checkServerTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {}
-                public X509Certificate[] getAcceptedIssuers() {
-                    return new X509Certificate[0];
-                }}}, new SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(
-                    context.getSocketFactory());
-        } catch (Exception e) { // should never happen
-            e.printStackTrace();
-        }
     }
 
 

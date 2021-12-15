@@ -7,10 +7,14 @@ android {
 
     defaultConfig {
         applicationId "com.example.printing"
-        minSdk 21
-        targetSdk 31
+//        minSdk 21
+//        targetSdk 31
         versionCode 1
         versionName "1.0"
+
+        minSdk 22 //Required to support all PAX & Telpo models
+        targetSdk 29
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,6 +29,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        pickFirst '**/*.so'
+        exclude 'META-INF/*'
+        exclude '**/anim/*.xml'
+        exclude '**/layout/*.xml'
+        exclude 'resources.arsc'
+        exclude 'AndroidManifest.xml'
+        exclude "**/animator/*.xml"
+    }
+
 }
 
 dependencies {
@@ -32,6 +47,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'com.handpoint.api:sdk:6.+'
+    implementation 'com.github.osama-raddad:FireCrasher:2.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
