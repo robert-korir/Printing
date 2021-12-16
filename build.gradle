@@ -3,7 +3,18 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
+
+        maven {
+            name = "AEVI-UK"
+            url = uri("https://maven.pkg.github.com/aevi-uk/*")
+            credentials {
+                username = "moseskaranja830@gmail.com"
+                password = "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"
+            }
+        }
     }
+
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.3"
 
@@ -15,3 +26,12 @@ buildscript {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+//allprojects {
+//    repositories {
+//        google()
+//        mavenCentral()
+//        maven { url 'https://jitpack.io' }
+//    }
+//}
