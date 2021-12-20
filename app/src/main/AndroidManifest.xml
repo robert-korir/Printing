@@ -2,13 +2,36 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.printing">
 
-<<<<<<< HEAD
+<!--<<<<<<< HEAD-->
+<!--    <uses-feature-->
+<!--        android:name="android.hardware.usb.host"-->
+<!--        android:required="false" />-->
+<!--    <uses-feature-->
+<!--        android:name="android.hardware.nfc"-->
+<!--        android:required="false"/>-->
+
+<!--    <uses-permission android:name="android.permission.CAMERA" />-->
+<!--    <uses-permission android:name="android.permission.VIBRATE" />-->
+<!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+<!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+<!--    <uses-permission android:name="android.permission.NFC"/>-->
+<!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+
+<!--=======-->
+<!--    <uses-permission android:name="com.aevi.permission.NGS_PRINT_SERVICE"/>-->
+<!--&gt;>>>>>> 687c1bd87053619cdd1e99b114ca8c34fcee2e35-->
+
+
     <uses-feature
         android:name="android.hardware.usb.host"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="false"/>
+
+
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -17,11 +40,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.NFC"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-=======
-    <uses-permission android:name="com.aevi.permission.NGS_PRINT_SERVICE"/>
->>>>>>> 687c1bd87053619cdd1e99b114ca8c34fcee2e35
 
     <application
         android:allowBackup="true"

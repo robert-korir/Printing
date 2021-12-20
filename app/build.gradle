@@ -53,11 +53,39 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    implementation 'com.handpoint.api:sdk:6.+'
+    //implementation 'com.handpoint.api:sdk:6.+'
     implementation 'com.github.osama-raddad:FireCrasher:2.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+//    implementation files('libs/core-3.1.0.jar')
+//    implementation files('libs/PosUtil.jar')
+//    implementation files('libs/SmartCardLib.jar')
+//    implementation files('libs/telpo_api.jar')
+//    implementation files('libs/zkandroidcore.jar')
+//    implementation files('libs/zkandroidnidfpsensor.jar')
+
+
+    //sumni printe
+    implementation 'com.sunmi:printerlibrary:1.0.7'
+
+
+
+
+
+
+
+
+    //compile files('libs/core-3.2.1.jar')
+    //implementation files('libs/top-usdk-service-1.0.2.jar')
+    //implementation files('libs/printersdk.jar')
+
+//    implementation 'com.j256.ormlite:ormlite-android:4.48'
+//    implementation 'androidx.appcompat:appcompat:1.0.0'
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'com.google.android.gms:play-services:8.1.0'
+//    implementation 'com.google.android.material:material:1.0.0'
 
     implementation files('libs/core-3.1.0.jar')
     implementation files('libs/PosUtil.jar')
@@ -65,4 +93,6 @@ dependencies {
     implementation files('libs/telpo_api.jar')
     implementation files('libs/zkandroidcore.jar')
     implementation files('libs/zkandroidnidfpsensor.jar')
+
+
 }

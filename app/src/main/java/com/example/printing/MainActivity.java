@@ -2,7 +2,6 @@ package com.example.printing;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-<<<<<<< HEAD
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -15,29 +14,10 @@ import android.widget.Toast;
 import com.telpo.tps550.api.TelpoException;
 import com.telpo.tps550.api.printer.UsbThermalPrinter;
 import com.telpo.tps550.api.util.ShellUtils;
-=======
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
->>>>>>> 687c1bd87053619cdd1e99b114ca8c34fcee2e35
-
-import com.handpoint.api.HandpointCredentials;
-import com.handpoint.api.Hapi;
-import com.handpoint.api.HapiFactory;
-import com.handpoint.api.shared.ConnectionMethod;
-import com.handpoint.api.shared.ConnectionStatus;
-import com.handpoint.api.shared.Currency;
-import com.handpoint.api.shared.Device;
-import com.handpoint.api.shared.Events;
-import com.handpoint.api.shared.SignatureRequest;
-import com.handpoint.api.shared.StatusInfo;
-import com.handpoint.api.shared.TipConfiguration;
-import com.handpoint.api.shared.TransactionResult;
-import com.handpoint.api.shared.agreements.Acquirer;
-import com.handpoint.api.shared.agreements.Credential;
-import com.handpoint.api.shared.agreements.MerchantAuth;
-import com.handpoint.api.shared.options.SaleOptions;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -52,14 +32,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.X509TrustManager;
 
-public class MainActivity extends AppCompatActivity implements Events.Required, Events.ConnectionStatusChanged, Events.CurrentTransactionStatus {
+public class MainActivity extends AppCompatActivity{
 
     Button mainButton;
-
-    
-
-
-    private Hapi api;
 
 //    public MainActivity(){
 //
@@ -70,27 +45,23 @@ public class MainActivity extends AppCompatActivity implements Events.Required, 
 //
 //    }
 
-    public void initApi(Context context){
-        String sharedSecret = "0102030405060708091011121314151617181920212223242526272829303132";
-        HandpointCredentials handpointCredentials = new HandpointCredentials(sharedSecret);
-        this.api = HapiFactory.getAsyncInterface(this, context, handpointCredentials);
-        // The api is now initialized. Yay! we've even set default credentials.
-        // The shared secret is a unique string shared between the payment terminal and your application, it is unique per merchant.
-        // You should replace this default shared secret with the one sent by the Handpoint support team.
-
-        //Since we're running inside the terminal, we can create a device ourselves and connect to it
-        Device device = new Device("some name", "address", "", ConnectionMethod.ANDROID_PAYMENT);
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
+        mainButton = findViewById(R.id.mainButton);
+
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                print();
+
+            }
+        });
+
+
         //handler = new MyHandler();
-        print();
     }
 
     public void print(){
@@ -139,8 +110,10 @@ public class MainActivity extends AppCompatActivity implements Events.Required, 
     private boolean isBold=false;
     private int printGray=5;
     private int wordFont=24;
-    private String printContent="Text \n Text  " +
-            "\n Text";
+//    private String printContent="Text \n Text  " +
+//            "\n Text";
+private String printContent="Print Something \n Print Something  " +
+        "\n Print Something";
 
     private String getUsbPrinterDev(){
         String msgSuccess = ShellUtils.execCommand("cat /proc/bus/usb/devices", false).successMsg;
@@ -305,166 +278,140 @@ public class MainActivity extends AppCompatActivity implements Events.Required, 
                 }
             }
         }
-=======
-        trustEveryone();
-        HttpsTrustManager.allowAllSSL();
-        initApi(this);
-
-        mainButton = findViewById(R.id.mainButton);
-
-        mainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                payWithOptions();
-
-            }
-        });
-    }
-
-
-    @Override
-    public void connectionStatusChanged(ConnectionStatus connectionStatus, Device device) {
-        if (connectionStatus == ConnectionStatus.Connected){
-            //Connection Status connected
-        }
 
     }
 
-    @Override
-    public void deviceDiscoveryFinished(List<Device> list) {
-        //This event can be safely ignored for a PAX/Telpo integration
 
-    }
-
-    public boolean pay(){
-        return this.api.sale(new BigInteger("1000"), Currency.GBP);
-        //Let's start our first payment of 10 pounds
-        //Use the currency of the country in which you will be deploying terminals
-
-    }
-
-    public boolean payWithOptions(){
-        SaleOptions options = new SaleOptions();
-
-        //Adding tipping
-        TipConfiguration config = new TipConfiguration();
-
-        //Optionally
-        config.setHeaderName("Header");
-
-        //Optionally
-        config.setFooter("Footer");
-
-        //Optionally
-        config.setEnterAmountEnabled(true);
-
-        //Optionally
-        config.setSkipEnabled(true);
-
-        //Optionally
-        config.setTipPercentages(Arrays.asList(5,10,15,20));
-        options.setTipConfiguration(config);
-
-        //Adding Multi MID / Custom merchant Authentication
-        MerchantAuth auth = new MerchantAuth();
-        Credential credential = new Credential();
-
-        //Optionally
-        credential.setAcquirer(Acquirer.SANDBOX);
-
-        //Optionally
-        credential.setMid("mid");
-
-        //Optionally
-        credential.setTid("tid");
-
-        //Add as many credentials as Acquirers your merchant have agreements with
-        auth.add(credential);
-        options.setMerchantAuth(auth);
-
-        //Add a customer reference
-        options.setCustomerReference("Your customer reference");
-
-        //Enable pin bypass
-        options.setPinBypass(true);
-
-        //Enable signature bypass
-        options.setSignatureBypass(true);
-
-        //Define a budget number
-        options.setBudgetNumber("YOUR_BUDGET_NUMBER");
-
-        //this.api.sale(new BigInteger("1000"),Currency.GBP, options))
-        //trustEveryone();
-
-        return this.api.sale(new BigInteger("1000"),Currency.GBP, options);
-    }
-
-    @Override
-    public void currentTransactionStatus(StatusInfo statusInfo, Device device) {
-        if (statusInfo.getStatus() == StatusInfo.Status.InitialisationComplete){
-            //The StatusInfo object holds the different transaction statuses like reading card, pin entry, etc.
-            //Let's launch a payment
-            pay();
-
-        }
-
-    }
-
-    @Override
-    public void signatureRequired(SignatureRequest signatureRequest, Device device) {
-        //This event can be saely ignored for a PAX/Telpo integration
-        //The complete signature capture process is already handled in the sdk, a dialog will prompt the user for a signature if required
-        //If a signature was entered, it should be printed as receipts
-
->>>>>>> 687c1bd87053619cdd1e99b114ca8c34fcee2e35
-    }
-
-
-
-
-    @Override
-    public void endOfTransaction(TransactionResult transactionResult, Device device) {
-        //The TransactionResult object holds details about the transaction as well as the receipts
-        //Useful information can be accessed through this object like the transaction ID, the amount etc
-
-    }
-
-    @Override
-    public void transactionResultReady(TransactionResult transactionResult, Device device) {
-        //Pending TransactionResult objects will eb received through this event if the EndOfTransaction
-        //Event was not delivered during the transaction, for example because of a network issue
-        //FOr this sample app we are not going to implement this event
-
-    }
-
-    public void disconnect(){
-        this.api.disconnect();
-        //THis disconnects the connection
-    }
-
-    private void trustEveryone() {
-        try {
-            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier(){
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }});
-            SSLContext context = SSLContext.getInstance("TLS");
-            context.init(null, new X509TrustManager[]{new X509TrustManager(){
-                public void checkClientTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {}
-                public void checkServerTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {}
-                public X509Certificate[] getAcceptedIssuers() {
-                    return new X509Certificate[0];
-                }}}, new SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(
-                    context.getSocketFactory());
-        } catch (Exception e) { // should never happen
-            e.printStackTrace();
-        }
-    }
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//import androidx.appcompat.app.AppCompatActivity;
+//
+//import android.os.Bundle;
+//
+//
+//
+//public class MainActivity extends AppCompatActivity  {
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//
+//        TPS900Print tps900Print = new TPS900Print(this);
+//
+//        tps900Print.print();
+//    }
+//
+//}
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
